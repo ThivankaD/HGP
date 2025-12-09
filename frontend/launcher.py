@@ -20,7 +20,7 @@ class InstructionWindowNormal(tk.Toplevel):
         super().__init__()
         self.launcher = launcher
         self.title("Normal Mouse Instructions")
-        self.geometry("450x550")
+        self.geometry("450x650")
         self.configure(bg="#1e1e2f")
         
         self.create_widgets()
@@ -37,10 +37,10 @@ class InstructionWindowNormal(tk.Toplevel):
         
         # Instructions
         frame = tk.Frame(self, bg="#2c2c40", bd=2, relief=tk.RIDGE)
-        frame.pack(padx=20, pady=10, fill=tk.BOTH, expand=True)
+        frame.pack(padx=20, pady=10, fill=tk.BOTH)
         
         text = tk.Text(frame, wrap=tk.WORD, bg="#2c2c40", fg="#f2f2f2",
-                      font=("Segoe UI", 10), bd=0, padx=10, pady=10)
+                      font=("Segoe UI", 10), bd=0, padx=10, pady=10, height=12)
         text.insert("1.0", 
             "Welcome to Normal Mouse Mode!\n\n"
             "👉 This mode provides:\n"
@@ -50,7 +50,7 @@ class InstructionWindowNormal(tk.Toplevel):
             "🖱 Use STOP button to terminate the mode.\n"
             "⚙ Ensure your camera is working properly.")
         text.config(state=tk.DISABLED)
-        text.pack(fill=tk.BOTH, expand=True)
+        text.pack(fill=tk.BOTH)
         
         # Start button
         btn = tk.Button(self, text="🧭 Start Normal Mode", 
@@ -97,7 +97,7 @@ class InstructionWindowGesture(tk.Toplevel):
         super().__init__()
         self.launcher = launcher
         self.title("Gesture Mouse Instructions")
-        self.geometry("450x550")
+        self.geometry("450x650")
         self.configure(bg="#1e1e2f")
         
         self.create_widgets()
@@ -111,10 +111,10 @@ class InstructionWindowGesture(tk.Toplevel):
         self.create_gif_label()
         
         frame = tk.Frame(self, bg="#2c2c40", bd=2, relief=tk.RIDGE)
-        frame.pack(padx=20, pady=10, fill=tk.BOTH, expand=True)
+        frame.pack(padx=20, pady=10, fill=tk.BOTH)
         
         text = tk.Text(frame, wrap=tk.WORD, bg="#2c2c40", fg="#f2f2f2",
-                      font=("Segoe UI", 10), bd=0, padx=10, pady=10)
+                      font=("Segoe UI", 10), bd=0, padx=10, pady=10, height=12)
         text.insert("1.0", 
             "Welcome to Gesture Mouse Mode!\n\n"
             "👉 Control your computer with hand gestures:\n"
@@ -124,7 +124,7 @@ class InstructionWindowGesture(tk.Toplevel):
             "🖱 Use STOP button to terminate the mode.\n"
             "⚙ Ensure good lighting and clear hand visibility.")
         text.config(state=tk.DISABLED)
-        text.pack(fill=tk.BOTH, expand=True)
+        text.pack(fill=tk.BOTH)
         
         btn = tk.Button(self, text="🖐 Start Gesture Mode", 
                        command=self.start_gesture_mode,
@@ -170,7 +170,7 @@ class InstructionWindowPresentation(tk.Toplevel):
         super().__init__()
         self.launcher = launcher
         self.title("Presentation Instructions")
-        self.geometry("450x550")
+        self.geometry("450x650")
         self.configure(bg="#1e1e2f")
         
         self.create_widgets()
@@ -184,10 +184,10 @@ class InstructionWindowPresentation(tk.Toplevel):
         self.create_gif_label()
         
         frame = tk.Frame(self, bg="#2c2c40", bd=2, relief=tk.RIDGE)
-        frame.pack(padx=20, pady=10, fill=tk.BOTH, expand=True)
+        frame.pack(padx=20, pady=10, fill=tk.BOTH)
         
         text = tk.Text(frame, wrap=tk.WORD, bg="#2c2c40", fg="#f2f2f2",
-                      font=("Segoe UI", 10), bd=0, padx=10, pady=10)
+                      font=("Segoe UI", 10), bd=0, padx=10, pady=10, height=12)
         text.insert("1.0", 
             "Welcome to Presentation Mode!\n\n"
             "👉 Perfect for presentations:\n"
@@ -197,7 +197,7 @@ class InstructionWindowPresentation(tk.Toplevel):
             "🖱 Use STOP button to terminate the mode.\n"
             "⚙ Position yourself clearly in camera view.")
         text.config(state=tk.DISABLED)
-        text.pack(fill=tk.BOTH, expand=True)
+        text.pack(fill=tk.BOTH)
         
         btn = tk.Button(self, text="🎥 Start Presentation Mode", 
                        command=self.start_presentation_mode,
@@ -243,7 +243,7 @@ class InstructionWindowGaming(tk.Toplevel):
         super().__init__()
         self.launcher = launcher
         self.title("Gaming Instructions")
-        self.geometry("450x550")
+        self.geometry("450x650")
         self.configure(bg="#1e1e2f")
         
         self.create_widgets()
@@ -257,10 +257,10 @@ class InstructionWindowGaming(tk.Toplevel):
         self.create_gif_label()
         
         frame = tk.Frame(self, bg="#2c2c40", bd=2, relief=tk.RIDGE)
-        frame.pack(padx=20, pady=10, fill=tk.BOTH, expand=True)
+        frame.pack(padx=20, pady=10, fill=tk.BOTH)
         
         text = tk.Text(frame, wrap=tk.WORD, bg="#2c2c40", fg="#f2f2f2",
-                      font=("Segoe UI", 10), bd=0, padx=10, pady=10)
+                      font=("Segoe UI", 10), bd=0, padx=10, pady=10, height=12)
         text.insert("1.0", 
             "Welcome to Gaming Mode!\n\n"
             "👉 Optimized for gaming:\n"
@@ -270,7 +270,7 @@ class InstructionWindowGaming(tk.Toplevel):
             "🖱 Use STOP button to terminate the mode.\n"
             "⚙ Ensure stable lighting for best tracking.")
         text.config(state=tk.DISABLED)
-        text.pack(fill=tk.BOTH, expand=True)
+        text.pack(fill=tk.BOTH)
         
         btn = tk.Button(self, text="🎮 Start Gaming Mode", 
                        command=self.start_gaming_mode,
@@ -509,7 +509,7 @@ class MouseLauncher(tk.Tk):
     def show_instructions(self):
         info = tk.Toplevel(self)
         info.title("Instructions")
-        info.geometry("400x350")
+        info.geometry("400x650")
         info.configure(bg="#1e1e2f")
         
         title = tk.Label(info, text="📘 Gesture Mouse Instructions", 

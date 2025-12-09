@@ -7,7 +7,7 @@ import pyautogui
 import mouse 
 
 ##########################
-wCam, hCam = 640, 480
+wCam, hCam = 640, 480 
 frameR = 100 # Frame Reduction
 smoothening = 9
 #########################
@@ -34,6 +34,10 @@ prev_x = 0
 slide_change_time = 0
 cooldown = 1.0
 # print(wScr, hScr)
+prev_motion_x = None
+motion_time = 0
+motion_cooldown = 2# seconds
+motion_threshold = 80
 
 while True:
     # 1. Find hand Landmarks
@@ -57,41 +61,17 @@ while True:
     # 2. Get the tip of the index and middle fingers
     
 
-    if len(lmList) != 0:
-        x1, y1 = lmList[8][1:]
-        x2, y2 = lmList[12][1:]
-        # print(x1, y1, x2, y2)
+   
     
     # 3. Check which fingers are up
     fingers = detector.fingersUp()
     # print(fingers)
-    cv2.rectangle(img, (frameR, frameR), (wCam - frameR, hCam - frameR),
-    (255, 0, 255), 2)
-    # 4. Only Index Finger : Moving Mode
-    if fingers[1] == 1 and fingers[2] == 0:
-        # 5. Convert Coordinates
-        x3 = np.interp(x1, (frameR, wCam - frameR), (0, wScr))
-        y3 = np.interp(y1, (frameR, hCam - frameR), (0, hScr))
-        # 6. Smoothen Values
-        clocX = plocX + (x3 - plocX) / smoothening
-        clocY = plocY + (y3 - plocY) / smoothening
     
-        # 7. Move Mouse
-        autopy.mouse.move(wScr - clocX, clocY)
-        cv2.circle(img, (x1, y1), 15, (255, 0, 255), cv2.FILLED)
-        plocX, plocY = clocX, clocY
+   
+    
         
-    # 8. Both Index and middle fingers are up : Clicking Mode
-    if fingers[1] == 1 and fingers[2] == 1:
-        # 9. Find distance between fingers
-        length, img, lineInfo = detector.findDistance(8, 12, img)
-        # print(length)
-        # 10. Click mouse if distance short
-        if length < 20:
-            cv2.circle(img, (lineInfo[4], lineInfo[5]), 15, (0, 255, 0),
-            cv2.FILLED)
-            mouse.click('left')
-            time.sleep(0.25) # add a small delay to prevent multiple clicks
+
+# -----------------------------
     if fingers == [0, 1, 1, 0, 0]:
         pyautogui.press('right')
         time.sleep(1.5)
@@ -100,24 +80,11 @@ while True:
                
 
             # ✌️ Two fingers up → Previous Slide
-    elif fingers == [0, 1, 1, 1, 0]:
+    elif fingers == [0, 1, 0, 0, 0]:
         pyautogui.press('left')
         time.sleep(1.5)
         cv2.putText(img, "← Previous Slide", (150, 100),
             cv2.FONT_HERSHEY_SIMPLEX, 1.2, (0, 0, 255), 3)
-
-
-    if len(lmList) > 4:  # make sure landmarks exist
-        thumb_tip_y = lmList[4][2]
-        thumb_base_y = lmList[3][2]
-
-    # Check if thumb pointing downward
-        if thumb_tip_y > thumb_base_y + 40:  # adjust threshold if needed
-            cv2.putText(img, "Thumbs Down - Exiting...", (20, 150),
-            cv2.FONT_HERSHEY_PLAIN, 2, (0, 0, 255), 2)
-            time.sleep(1)
-            break
-
 
 
 

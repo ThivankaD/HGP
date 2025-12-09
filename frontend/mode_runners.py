@@ -193,41 +193,17 @@ class ModeRunner:
             img = detector.findHands(img)
             lmList, bbox = detector.findPosition(img)
 
-            if len(lmList) != 0:
-                x1, y1 = lmList[8][1:]
-                x2, y2 = lmList[12][1:]
+            fingers = detector.fingersUp()
 
-                fingers = detector.fingersUp()
-                cv2.rectangle(img, (frameR, frameR), (wCam - frameR, hCam - frameR), (255, 0, 255), 2)
+            # Next Slide: Index + Middle fingers (2 fingers)
+            if fingers == [0, 1, 1, 0, 0]:
+                pyautogui.press('right')
+                time.sleep(1.5)
 
-                if fingers[1] == 1 and fingers[2] == 0:
-                    x3 = np.interp(x1, (frameR, wCam - frameR), (0, wScr))
-                    y3 = np.interp(y1, (frameR, hCam - frameR), (0, hScr))
-                    clocX = plocX + (x3 - plocX) / smoothening
-                    clocY = plocY + (y3 - plocY) / smoothening
-                    autopy.mouse.move(wScr - clocX, clocY)
-                    plocX, plocY = clocX, clocY
-
-                if fingers[1] == 1 and fingers[2] == 1:
-                    length, img, lineInfo = detector.findDistance(8, 12, img)
-                    if length < 20:
-                        mouse.click('left')
-                        time.sleep(0.25)
-
-                if fingers == [0, 1, 1, 0, 0]:
-                    pyautogui.press('right')
-                    time.sleep(1.5)
-
-                elif fingers == [0, 1, 1, 1, 0]:
-                    pyautogui.press('left')
-                    time.sleep(1.5)
-
-                if len(lmList) > 4:
-                    thumb_tip_y = lmList[4][2]
-                    thumb_base_y = lmList[3][2]
-                    if thumb_tip_y > thumb_base_y + 40:
-                        time.sleep(1)
-                        break
+            # Previous Slide: Only Index finger
+            elif fingers == [0, 1, 0, 0, 0]:
+                pyautogui.press('left')
+                time.sleep(1.5)
 
             if cv2.waitKey(1) & 0xFF == 27:
                 break
